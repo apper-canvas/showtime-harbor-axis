@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 const MainFeature = () => {
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [selectedShowtime, setSelectedShowtime] = useState(null)
+  const [numberOfPeople, setNumberOfPeople] = useState(1)
   const [selectedSeats, setSelectedSeats] = useState([])
   const [currentStep, setCurrentStep] = useState(1)
   const [events, setEvents] = useState([])
@@ -54,23 +55,29 @@ const MainFeature = () => {
     setSelectedShowtime(null)
     setSelectedSeats([])
   }
+}
 
   const handleShowtimeSelect = (showtime) => {
     setSelectedShowtime(showtime)
-    setCurrentStep(3)
     setSelectedSeats([])
   }
 
+  const handlePeopleSelect = (count) => {
+    setNumberOfPeople(count)
+    setCurrentStep(4)
+    setSelectedSeats([])
+  }
+}
+
   const handleSeatSelect = (seatId) => {
     if (seatMap.bookedSeats.includes(seatId)) return
-    
     setSelectedSeats(prev => {
       if (prev.includes(seatId)) {
         return prev.filter(id => id !== seatId)
-      } else if (prev.length < 8) { // Max 8 seats
+      } else if (prev.length < numberOfPeople) {
         return [...prev, seatId]
       } else {
-        toast.warning('Maximum 8 seats can be selected')
+        toast.warning(`Maximum ${numberOfPeople} seats can be selected`)
         return prev
       }
     })
@@ -95,10 +102,11 @@ const MainFeature = () => {
       await bookingService.create(bookingData)
       toast.success(`Successfully booked ${selectedSeats.length} seats for ${selectedEvent.title}!`)
       
-      // Reset booking flow
+// Reset booking flow
       setCurrentStep(1)
       setSelectedEvent(null)
       setSelectedShowtime(null)
+      setNumberOfPeople(1)
       setSelectedSeats([])
     } catch (err) {
       toast.error('Booking failed. Please try again.')
@@ -121,12 +129,13 @@ const MainFeature = () => {
       default: return 'bg-green-600'
     }
   }
+}
 
   const steps = [
     { number: 1, title: 'Select Event', icon: 'Calendar' },
-    { number: 2, title: 'Choose Time', icon: 'Clock' },
-    { number: 3, title: 'Pick Seats', icon: 'Armchair' },
-    { number: 4, title: 'Confirm', icon: 'CreditCard' }
+    { number: 3, title: 'Select People', icon: 'Users' },
+    { number: 4, title: 'Pick Seats', icon: 'Armchair' },
+    { number: 5, title: 'Confirm', icon: 'CreditCard' }
   ]
 
   return (
@@ -277,11 +286,11 @@ const MainFeature = () => {
                       )}
                     </motion.button>
                   ))}
-                </div>
+</div>
               </motion.div>
             )}
 
-            {/* Step 3: Select Seats */}
+            {/* Step 3: Select Number of People */}
             {currentStep === 3 && selectedShowtime && (
               <motion.div
                 key="step3"
@@ -292,10 +301,90 @@ const MainFeature = () => {
               >
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-2xl font-heading font-semibold text-white">
-                    Choose Your Seats
+                    How many people?
                   </h3>
                   <button
                     onClick={() => setCurrentStep(2)}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <ApperIcon name="ArrowLeft" className="h-6 w-6" />
+                  </button>
+                </div>
+
+                <div className="max-w-md mx-auto">
+                  <div className="bg-white/5 rounded-xl p-8 border border-white/10 text-center">
+                    <div className="mb-6">
+                      <ApperIcon name="Users" className="h-16 w-16 text-accent mx-auto mb-4" />
+                      <p className="text-gray-300">Select the number of people for your booking</p>
+                    </div>
+
+                    <div className="flex items-center justify-center space-x-6 mb-8">
+                      <motion.button
+                        onClick={() => setNumberOfPeople(Math.max(1, numberOfPeople - 1))}
+                        disabled={numberOfPeople <= 1}
+                        className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        whileHover={{ scale: numberOfPeople > 1 ? 1.1 : 1 }}
+                        whileTap={{ scale: numberOfPeople > 1 ? 0.9 : 1 }}
+                      >
+                        <ApperIcon name="Minus" className="h-6 w-6" />
+                      </motion.button>
+
+                      <div className="text-center">
+                        <div className="text-4xl font-bold text-accent mb-2">{numberOfPeople}</div>
+                        <div className="text-sm text-gray-400">
+                          {numberOfPeople === 1 ? 'Person' : 'People'}
+                        </div>
+                      </div>
+
+                      <motion.button
+                        onClick={() => setNumberOfPeople(Math.min(8, numberOfPeople + 1))}
+                        disabled={numberOfPeople >= 8}
+                        className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        whileHover={{ scale: numberOfPeople < 8 ? 1.1 : 1 }}
+                        whileTap={{ scale: numberOfPeople < 8 ? 0.9 : 1 }}
+                      >
+                        <ApperIcon name="Plus" className="h-6 w-6" />
+                      </motion.button>
+                    </div>
+
+                    <div className="mb-6">
+                      <p className="text-sm text-gray-400 mb-2">Maximum 8 people per booking</p>
+                      <div className="w-full bg-gray-700 rounded-full h-2">
+                        <div 
+                          className="bg-accent h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${(numberOfPeople / 8) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+
+                    <motion.button
+                      onClick={() => handlePeopleSelect(numberOfPeople)}
+                      className="w-full gradient-primary py-3 rounded-xl text-white font-semibold hover:shadow-glow transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Continue to Seat Selection
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+)}
+
+            {/* Step 4: Select Seats */}
+            {currentStep === 4 && numberOfPeople && (
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl font-heading font-semibold text-white">
+Choose Your Seats
+                  </h3>
+                  <button
+                    onClick={() => setCurrentStep(3)}
                     className="text-gray-400 hover:text-white transition-colors"
                   >
                     <ApperIcon name="ArrowLeft" className="h-6 w-6" />
@@ -361,33 +450,38 @@ const MainFeature = () => {
                   >
                     <h4 className="text-lg font-semibold text-white mb-4">Booking Summary</h4>
                     <div className="space-y-2 text-gray-300">
-                      <p>Event: <span className="text-white">{selectedEvent?.title}</span></p>
+<p>Event: <span className="text-white">{selectedEvent?.title}</span></p>
                       <p>Time: <span className="text-white">{selectedShowtime?.time}</span></p>
+                      <p>People: <span className="text-white">{numberOfPeople}</span></p>
                       <p>Seats: <span className="text-accent">{selectedSeats.join(', ')}</span></p>
-                      <p>Quantity: <span className="text-white">{selectedSeats.length} tickets</span></p>
+                      <p>Quantity: <span className="text-white">{selectedSeats.length} of {numberOfPeople} tickets</span></p>
                       <div className="border-t border-white/10 pt-2 mt-4">
                         <p className="text-lg font-semibold">
                           Total: <span className="text-accent">${(selectedSeats.length * 12.99).toFixed(2)}</span>
                         </p>
-                      </div>
+</div>
                     </div>
                     <motion.button
-                      onClick={() => setCurrentStep(4)}
-                      className="w-full mt-6 gradient-primary py-3 rounded-xl text-white font-semibold hover:shadow-glow transition-all duration-300"
+                      onClick={() => setCurrentStep(5)}
+                      disabled={selectedSeats.length !== numberOfPeople}
+                      className="w-full mt-6 gradient-primary py-3 rounded-xl text-white font-semibold hover:shadow-glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      Proceed to Payment
+                      {selectedSeats.length === numberOfPeople 
+                        ? 'Proceed to Payment' 
+                        : `Select ${numberOfPeople - selectedSeats.length} more seat${numberOfPeople - selectedSeats.length !== 1 ? 's' : ''}`
+                      }
                     </motion.button>
                   </motion.div>
                 )}
               </motion.div>
-            )}
+)}
 
-            {/* Step 4: Confirm Booking */}
-            {currentStep === 4 && (
+            {/* Step 5: Confirm Booking */}
+            {currentStep === 5 && (
               <motion.div
-                key="step4"
+                key="step5"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -395,10 +489,10 @@ const MainFeature = () => {
               >
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-2xl font-heading font-semibold text-white">
-                    Confirm Your Booking
+Confirm Your Booking
                   </h3>
                   <button
-                    onClick={() => setCurrentStep(3)}
+                    onClick={() => setCurrentStep(4)}
                     className="text-gray-400 hover:text-white transition-colors"
                   >
                     <ApperIcon name="ArrowLeft" className="h-6 w-6" />
@@ -419,8 +513,12 @@ const MainFeature = () => {
                           <span className="text-white">{selectedShowtime?.time}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span>Seats:</span>
+<span>Seats:</span>
                           <span className="text-accent">{selectedSeats?.join(', ')}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>People:</span>
+                          <span className="text-white">{numberOfPeople}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Tickets:</span>
