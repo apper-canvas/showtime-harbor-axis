@@ -50,15 +50,13 @@ const MainFeature = () => {
   }, [])
 
   const handleEventSelect = (event) => {
+const handleEventSelect = (event) => {
     setSelectedEvent(event)
     setCurrentStep(2)
-    setSelectedShowtime(null)
     setSelectedSeats([])
   }
-}
-
-  const handleShowtimeSelect = (showtime) => {
     setSelectedShowtime(showtime)
+    setCurrentStep(3)
     setSelectedSeats([])
   }
 
@@ -67,7 +65,6 @@ const MainFeature = () => {
     setCurrentStep(4)
     setSelectedSeats([])
   }
-}
 
   const handleSeatSelect = (seatId) => {
     if (seatMap.bookedSeats.includes(seatId)) return
@@ -100,9 +97,9 @@ const MainFeature = () => {
       }
       
       await bookingService.create(bookingData)
-      toast.success(`Successfully booked ${selectedSeats.length} seats for ${selectedEvent.title}!`)
+toast.success(`Successfully booked ${selectedSeats.length} seats for ${selectedEvent.title}!`)
       
-// Reset booking flow
+      // Reset booking flow
       setCurrentStep(1)
       setSelectedEvent(null)
       setSelectedShowtime(null)
@@ -124,15 +121,14 @@ const MainFeature = () => {
   const getSeatColor = (status) => {
     switch (status) {
       case 'booked': return 'bg-gray-600 cursor-not-allowed'
-      case 'selected': return 'bg-accent text-black cursor-pointer'
+case 'selected': return 'bg-accent text-black cursor-pointer'
       case 'available': return 'bg-green-600 hover:bg-green-500 cursor-pointer'
       default: return 'bg-green-600'
     }
   }
-}
-
   const steps = [
     { number: 1, title: 'Select Event', icon: 'Calendar' },
+    { number: 2, title: 'Select Showtime', icon: 'Clock' },
     { number: 3, title: 'Select People', icon: 'Users' },
     { number: 4, title: 'Pick Seats', icon: 'Armchair' },
     { number: 5, title: 'Confirm', icon: 'CreditCard' }
@@ -281,15 +277,31 @@ const MainFeature = () => {
                     >
                       <div className="text-lg font-semibold">{showtime.time}</div>
                       <div className="text-sm opacity-75">Today</div>
-                      {!showtime.available && (
+{!showtime.available && (
                         <div className="text-xs text-red-400 mt-1">Sold Out</div>
                       )}
                     </motion.button>
                   ))}
-</div>
+                </div>
+                
+                {selectedShowtime && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-6 text-center"
+                  >
+                    <motion.button
+                      onClick={() => setCurrentStep(3)}
+                      className="gradient-primary px-8 py-3 rounded-xl text-white font-semibold hover:shadow-glow transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Continue to People Selection
+                    </motion.button>
+                  </motion.div>
+                )}
               </motion.div>
             )}
-
             {/* Step 3: Select Number of People */}
             {currentStep === 3 && selectedShowtime && (
               <motion.div
@@ -365,23 +377,21 @@ const MainFeature = () => {
                     >
                       Continue to Seat Selection
                     </motion.button>
-                  </div>
+</div>
                 </div>
               </motion.div>
             )}
-)}
-
             {/* Step 4: Select Seats */}
             {currentStep === 4 && numberOfPeople && (
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
+transition={{ duration: 0.3 }}
               >
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-2xl font-heading font-semibold text-white">
-Choose Your Seats
+                    Choose Your Seats
                   </h3>
                   <button
                     onClick={() => setCurrentStep(3)}
@@ -446,20 +456,20 @@ Choose Your Seats
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-white/5 rounded-xl p-6 border border-white/10"
+className="bg-white/5 rounded-xl p-6 border border-white/10"
                   >
                     <h4 className="text-lg font-semibold text-white mb-4">Booking Summary</h4>
                     <div className="space-y-2 text-gray-300">
-<p>Event: <span className="text-white">{selectedEvent?.title}</span></p>
+                      <p>Event: <span className="text-white">{selectedEvent?.title}</span></p>
                       <p>Time: <span className="text-white">{selectedShowtime?.time}</span></p>
                       <p>People: <span className="text-white">{numberOfPeople}</span></p>
                       <p>Seats: <span className="text-accent">{selectedSeats.join(', ')}</span></p>
                       <p>Quantity: <span className="text-white">{selectedSeats.length} of {numberOfPeople} tickets</span></p>
-                      <div className="border-t border-white/10 pt-2 mt-4">
+<div className="border-t border-white/10 pt-2 mt-4">
                         <p className="text-lg font-semibold">
                           Total: <span className="text-accent">${(selectedSeats.length * 12.99).toFixed(2)}</span>
                         </p>
-</div>
+                      </div>
                     </div>
                     <motion.button
                       onClick={() => setCurrentStep(5)}
@@ -472,12 +482,11 @@ Choose Your Seats
                         ? 'Proceed to Payment' 
                         : `Select ${numberOfPeople - selectedSeats.length} more seat${numberOfPeople - selectedSeats.length !== 1 ? 's' : ''}`
                       }
-                    </motion.button>
+</motion.button>
                   </motion.div>
                 )}
               </motion.div>
-)}
-
+            )}
             {/* Step 5: Confirm Booking */}
             {currentStep === 5 && (
               <motion.div
@@ -485,11 +494,11 @@ Choose Your Seats
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
+transition={{ duration: 0.3 }}
               >
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-2xl font-heading font-semibold text-white">
-Confirm Your Booking
+                    Confirm Your Booking
                   </h3>
                   <button
                     onClick={() => setCurrentStep(4)}
@@ -510,10 +519,10 @@ Confirm Your Booking
                         </div>
                         <div className="flex justify-between">
                           <span>Date & Time:</span>
-                          <span className="text-white">{selectedShowtime?.time}</span>
+<span className="text-white">{selectedShowtime?.time}</span>
                         </div>
                         <div className="flex justify-between">
-<span>Seats:</span>
+                          <span>Seats:</span>
                           <span className="text-accent">{selectedSeats?.join(', ')}</span>
                         </div>
                         <div className="flex justify-between">
