@@ -64,14 +64,7 @@ const Home = () => {
                 <ApperIcon name="Play" className="h-6 w-6 text-white" />
               </div>
               <h1 className="text-2xl font-heading font-bold text-white">ShowTime</h1>
-            </motion.div>
-            
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-white hover:text-accent transition-colors">Movies</a>
-              <a href="#" className="text-white hover:text-accent transition-colors">Events</a>
-              <a href="#" className="text-white hover:text-accent transition-colors">Sports</a>
-              <a href="#" className="text-white hover:text-accent transition-colors">Activities</a>
-            </nav>
+</motion.div>
             
             <div className="flex items-center space-x-4">
               <div className="hidden sm:block relative">
@@ -276,9 +269,9 @@ const Home = () => {
                     className="absolute bottom-4 left-1/2 transform -translate-x-1/2 gradient-primary px-4 py-2 rounded-lg text-white font-medium opacity-0 group-hover:opacity-100 transition-all duration-300"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                  >
+>
                     Book Now
-</motion.button>
+                  </motion.button>
                 </div>
                 
                 <div className="p-4">
