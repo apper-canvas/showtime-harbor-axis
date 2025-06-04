@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import TheaterSelection from './pages/TheaterSelection'
+import MainFeature from './components/MainFeature'
 
 function App() {
   return (
