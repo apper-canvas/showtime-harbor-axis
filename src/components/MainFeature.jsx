@@ -49,12 +49,13 @@ const MainFeature = () => {
     loadData()
   }, [])
 
-  const handleEventSelect = (event) => {
 const handleEventSelect = (event) => {
     setSelectedEvent(event)
     setCurrentStep(2)
     setSelectedSeats([])
   }
+
+  const handleShowtimeSelect = (showtime) => {
     setSelectedShowtime(showtime)
     setCurrentStep(3)
     setSelectedSeats([])
