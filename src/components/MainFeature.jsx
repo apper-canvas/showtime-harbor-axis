@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import ApperIcon from './ApperIcon'
 import { eventService, venueService, bookingService } from '../services'
 import { toast } from 'react-toastify'
 
 const MainFeature = () => {
+const MainFeature = () => {
+  const navigate = useNavigate()
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [selectedShowtime, setSelectedShowtime] = useState(null)
   const [numberOfPeople, setNumberOfPeople] = useState(1)
@@ -14,7 +17,6 @@ const MainFeature = () => {
   const [venues, setVenues] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-
   // Sample seat map for demonstration
   const seatMap = {
     rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
@@ -137,13 +139,24 @@ case 'selected': return 'bg-accent text-black cursor-pointer'
 
   return (
     <section className="py-16 bg-gradient-to-b from-black/20 to-black/40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
+          <div className="flex items-center justify-center mb-6">
+            <motion.button
+              onClick={() => navigate('/')}
+              className="absolute left-4 top-4 flex items-center space-x-2 glassmorphism px-4 py-2 rounded-xl border border-white/20 text-white hover:text-accent hover:border-accent/50 transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ApperIcon name="ArrowLeft" className="h-5 w-5" />
+              <span className="hidden sm:inline font-medium">Back to Home</span>
+            </motion.button>
+          </div>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-4">
             Book Your Perfect Show
           </h2>
@@ -151,7 +164,6 @@ case 'selected': return 'bg-accent text-black cursor-pointer'
             Experience our seamless booking process with real-time seat selection and instant confirmation.
           </p>
         </motion.div>
-
         {/* Progress Steps */}
         <div className="flex justify-center mb-12">
           <div className="flex items-center space-x-4 md:space-x-8">
