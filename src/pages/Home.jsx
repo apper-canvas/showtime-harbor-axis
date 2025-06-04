@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ApperIcon from '../components/ApperIcon'
 import MainFeature from '../components/MainFeature'
+import SocialShare from '../components/SocialShare'
 import { eventService } from '../services'
 import { toast } from 'react-toastify'
-
 const Home = () => {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(false)
@@ -274,10 +274,10 @@ const Home = () => {
                     whileTap={{ scale: 0.95 }}
                   >
                     Book Now
-                  </motion.button>
+</motion.button>
                 </div>
                 
-<div className="p-4">
+                <div className="p-4">
                   <h3 className="text-lg font-semibold text-white mb-1 truncate">
                     {event?.title || 'Event Title'}
                   </h3>
