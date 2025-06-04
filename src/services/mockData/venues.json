@@ -1,0 +1,163 @@
+[
+  {
+    "id": "1",
+    "name": "Cinema Complex Downtown",
+    "location": {
+      "address": "123 Main Street, Downtown",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "coordinates": { "lat": 40.7128, "lng": -74.0060 }
+    },
+    "seatMap": {
+      "totalSeats": 250,
+      "rows": 15,
+      "seatsPerRow": [16, 16, 18, 18, 18, 20, 20, 20, 20, 18, 18, 16, 16, 14, 12],
+      "premiumRows": [6, 7, 8, 9],
+      "wheelchairAccessible": [1, 15]
+    },
+    "facilities": ["IMAX", "Dolby Atmos", "Reclining Seats", "Concessions", "Parking", "Wheelchair Access"],
+    "capacity": 250,
+    "type": "cinema"
+  },
+  {
+    "id": "2",
+    "name": "Madison Square Garden",
+    "location": {
+      "address": "4 Pennsylvania Plaza",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10001",
+      "coordinates": { "lat": 40.7505, "lng": -73.9934 }
+    },
+    "seatMap": {
+      "totalSeats": 20000,
+      "levels": ["Floor", "Chase Bridge", "200 Level", "300 Level"],
+      "sections": 32,
+      "premiumSeating": ["Floor", "Chase Bridge", "Club Seats"]
+    },
+    "facilities": ["VIP Lounges", "Premium Dining", "Gift Shop", "Multiple Bars", "Parking", "Wheelchair Access", "Security"],
+    "capacity": 20000,
+    "type": "arena"
+  },
+  {
+    "id": "3",
+    "name": "Broadway Theater District",
+    "location": {
+      "address": "200 W 45th Street",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10036",
+      "coordinates": { "lat": 40.7589, "lng": -73.9851 }
+    },
+    "seatMap": {
+      "totalSeats": 1500,
+      "levels": ["Orchestra", "Mezzanine", "Balcony"],
+      "premiumSeating": ["Orchestra Center", "Mezzanine Center"],
+      "wheelchairAccessible": ["Orchestra Row A-C"]
+    },
+    "facilities": ["Coat Check", "Bar", "Gift Shop", "Accessible Seating", "Air Conditioning"],
+    "capacity": 1500,
+    "type": "theater"
+  },
+  {
+    "id": "4",
+    "name": "MetLife Stadium",
+    "location": {
+      "address": "1 MetLife Stadium Dr",
+      "city": "East Rutherford",
+      "state": "NJ",
+      "zipCode": "07073",
+      "coordinates": { "lat": 40.8135, "lng": -74.0745 }
+    },
+    "seatMap": {
+      "totalSeats": 82500,
+      "levels": ["Field Level", "Mezzanine Level", "Upper Level", "Club Level"],
+      "premiumSeating": ["Club Seats", "Suites", "Field Level"],
+      "sections": 134
+    },
+    "facilities": ["Multiple Concession Stands", "Team Store", "VIP Clubs", "Parking", "Security", "WiFi", "ATMs"],
+    "capacity": 82500,
+    "type": "stadium"
+  },
+  {
+    "id": "5",
+    "name": "Lincoln Center",
+    "location": {
+      "address": "10 Lincoln Center Plaza",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10023",
+      "coordinates": { "lat": 40.7722, "lng": -73.9836 }
+    },
+    "seatMap": {
+      "totalSeats": 2738,
+      "levels": ["Orchestra", "First Tier", "Second Tier", "Third Tier", "Fourth Tier"],
+      "premiumSeating": ["Orchestra", "Grand Tier Boxes"],
+      "acoustics": "World-class"
+    },
+    "facilities": ["Multiple Theaters", "Restaurant", "Gift Shop", "Parking", "Wheelchair Access", "Audio Enhancement"],
+    "capacity": 2738,
+    "type": "opera_house"
+  },
+  {
+    "id": "6",
+    "name": "Barclays Center",
+    "location": {
+      "address": "620 Atlantic Ave",
+      "city": "Brooklyn",
+      "state": "NY",
+      "zipCode": "11217",
+      "coordinates": { "lat": 40.6826, "lng": -73.9754 }
+    },
+    "seatMap": {
+      "totalSeats": 17732,
+      "levels": ["Floor", "100 Level", "200 Level"],
+      "premiumSeating": ["Floor Seats", "Courtside", "Club Seats"],
+      "suites": 40
+    },
+    "facilities": ["Restaurants", "Bars", "Team Store", "VIP Lounges", "Parking", "Public Transportation Access"],
+    "capacity": 17732,
+    "type": "arena"
+  },
+  {
+    "id": "7",
+    "name": "Radio City Music Hall",
+    "location": {
+      "address": "1260 6th Ave",
+      "city": "New York",
+      "state": "NY",
+      "zipCode": "10020",
+      "coordinates": { "lat": 40.7590, "lng": -73.9799 }
+    },
+    "seatMap": {
+      "totalSeats": 6015,
+      "levels": ["Orchestra", "1st Mezzanine", "2nd Mezzanine", "3rd Mezzanine"],
+      "premiumSeating": ["Orchestra Center"],
+      "historicFeatures": ["Art Deco Architecture", "Mighty Wurlitzer Organ"]
+    },
+    "facilities": ["Historic Architecture", "Gift Shop", "Concessions", "Wheelchair Access", "Photography Services"],
+    "capacity": 6015,
+    "type": "music_hall"
+  },
+  {
+    "id": "8",
+    "name": "Yankee Stadium",
+    "location": {
+      "address": "1 E 161st St",
+      "city": "Bronx",
+      "state": "NY",
+      "zipCode": "10451",
+      "coordinates": { "lat": 40.8296, "lng": -73.9262 }
+    },
+    "seatMap": {
+      "totalSeats": 47309,
+      "levels": ["Field Level", "Main Level", "Terrace Level", "Grandstand Level"],
+      "premiumSeating": ["Field Level", "Legends Suite", "Champions Suite"],
+      "monumentPark": true
+    },
+    "facilities": ["Monument Park", "Yankees Museum", "Multiple Dining Options", "Team Store", "Parking", "Subway Access"],
+    "capacity": 47309,
+    "type": "baseball_stadium"
+  }
+]
