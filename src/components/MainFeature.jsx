@@ -6,7 +6,6 @@ import { eventService, venueService, bookingService } from '../services'
 import { toast } from 'react-toastify'
 
 const MainFeature = () => {
-const MainFeature = () => {
   const navigate = useNavigate()
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [selectedShowtime, setSelectedShowtime] = useState(null)
