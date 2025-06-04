@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import ApperIcon from '../components/ApperIcon'
 import MainFeature from '../components/MainFeature'
@@ -6,6 +7,7 @@ import SocialShare from '../components/SocialShare'
 import { eventService } from '../services'
 import { toast } from 'react-toastify'
 const Home = () => {
+  const navigate = useNavigate()
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -45,9 +47,9 @@ const Home = () => {
   })
 
   const handleBookEvent = (eventId) => {
-    toast.success('Booking feature will be available soon!')
+    toast.success('Starting booking process...')
+    navigate('/theater-selection')
   }
-
   return (
     <div className="min-h-screen bg-secondary">
       {/* Header */}

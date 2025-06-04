@@ -8,12 +8,13 @@ import MainFeature from './components/MainFeature'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-secondary text-white">
+<div className="min-h-screen bg-secondary text-white">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/theater-selection" element={<TheaterSelection />} />
+          <Route path="/booking" element={<MainFeature />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        
         <ToastContainer
           position="top-right"
           autoClose={3000}
