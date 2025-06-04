@@ -277,16 +277,19 @@ const Home = () => {
                   </motion.button>
                 </div>
                 
-                <div className="p-4">
+<div className="p-4">
                   <h3 className="text-lg font-semibold text-white mb-1 truncate">
                     {event?.title || 'Event Title'}
                   </h3>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mb-3">
                     <span className="text-sm text-gray-400 capitalize">{event?.type || 'movie'}</span>
                     <div className="flex items-center space-x-1">
                       <ApperIcon name="Star" className="h-4 w-4 text-accent fill-current" />
                       <span className="text-white text-sm">{event?.rating || 4.5}</span>
                     </div>
+                  </div>
+                  <div className="border-t border-white/10 pt-3">
+                    <SocialShare event={event} />
                   </div>
                 </div>
               </motion.div>
