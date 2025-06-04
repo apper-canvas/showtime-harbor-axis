@@ -244,12 +244,16 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-12 text-center">
+>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-8 text-center">
               {selectedCategory === 'all' ? 'All Events' : categories.find(c => c.id === selectedCategory)?.name}
+              {selectedCategory !== 'all' && (
+                <span className="block text-lg text-accent font-normal mt-2">
+                  Showing {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'}
+                </span>
+              )}
             </h2>
           </motion.div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredEvents?.map((event, index) => (
               <motion.div
