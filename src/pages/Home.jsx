@@ -43,18 +43,35 @@ const Home = () => {
   const filteredEvents = events.filter(event => {
     const matchesSearch = event?.title?.toLowerCase()?.includes(searchQuery.toLowerCase()) || false
     const matchesCategory = selectedCategory === 'all' || event?.type === selectedCategory
-    return matchesSearch && matchesCategory
-  })
+return matchesSearch && matchesCategory
+})
 
-  const handleBookEvent = (eventId) => {
-    toast.success('Starting booking process...')
-    navigate('/theater-selection')
+const handleBookEvent = (eventId) => {
+  toast.success('Starting booking process...')
+  navigate('/theater-selection')
   }
-  return (
-    <div className="min-h-screen bg-secondary">
-      {/* Header */}
-      <header className="glassmorphism sticky top-0 z-50 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+  const handleExploreEvents = () => {
+    const featuredSection = document.getElementById('featured-events')
+    if (featuredSection) {
+      featuredSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  const handleBookShow = () => {
+    setSelectedCategory('movie')
+    toast.success('Showing movies')
+    const eventsSection = document.getElementById('events-grid')
+    if (eventsSection) {
+eventsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
+return (
+  <div className="min-h-screen bg-secondary">
+    {/* Header */}
+    <header className="glassmorphism sticky top-0 z-50 border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <motion.div 
               className="flex items-center space-x-3"
@@ -63,13 +80,13 @@ const Home = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="gradient-primary p-2 rounded-lg">
-                <ApperIcon name="Play" className="h-6 w-6 text-white" />
-              </div>
-              <h1 className="text-2xl font-heading font-bold text-white">ShowTime</h1>
-</motion.div>
-            
-            <div className="flex items-center space-x-4">
-              <div className="hidden sm:block relative">
+<ApperIcon name="Play" className="h-6 w-6 text-white" />
+            </div>
+            <h1 className="text-2xl font-heading font-bold text-white">ShowTime</h1>
+          </motion.div>
+          
+          <div className="flex items-center space-x-4">
+            <div className="hidden sm:block relative">
                 <ApperIcon name="Search" className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
                   type="text"
@@ -104,22 +121,33 @@ const Home = () => {
           <motion.div 
             className="max-w-2xl"
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 text-shadow">
-              Your Gateway to <span className="text-accent">Amazing</span> Entertainment
-            </h1>
-            <p className="text-xl text-gray-200 mb-8 text-shadow">
+animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 text-shadow text-center">
+            Your Gateway to <span className="text-accent">Amazing</span> Entertainment
+          </h1>
+          <p className="text-xl text-gray-200 mb-8 text-shadow">
               Discover and book tickets for the hottest movies, concerts, plays, and sporting events in your city.
             </p>
-            <motion.button
-              className="gradient-primary px-8 py-4 rounded-xl text-white font-semibold text-lg hover:shadow-neon transition-all duration-300 transform hover:scale-105"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Explore Events
-            </motion.button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.button
+                onClick={handleExploreEvents}
+                className="gradient-primary px-8 py-4 rounded-xl text-white font-semibold text-lg hover:shadow-neon transition-all duration-300 transform hover:scale-105"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Explore Events
+              </motion.button>
+              <motion.button
+                onClick={handleBookShow}
+                className="bg-white/10 border border-white/20 px-8 py-4 rounded-xl text-white font-semibold text-lg hover:bg-white/20 hover:border-accent transition-all duration-300 transform hover:scale-105"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Book Show
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -154,13 +182,13 @@ const Home = () => {
       {/* Featured Events */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-12 text-center">
-              Featured Events
+<motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 id="featured-events" className="text-3xl md:text-4xl font-heading font-bold text-white mb-12 text-center">
+            Featured Events
             </h2>
           </motion.div>
 
@@ -229,20 +257,20 @@ const Home = () => {
               ))}
             </div>
           )}
-        </div>
-      </section>
+</div>
+    </section>
 
-      {/* Events Grid */}
-      <section className="py-16 bg-black/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
->
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-8 text-center">
-              {selectedCategory === 'all' ? 'All Events' : categories.find(c => c.id === selectedCategory)?.name}
-              {selectedCategory !== 'all' && (
+    {/* Events Grid */}
+    <section id="events-grid" className="py-16 bg-black/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-8 text-center">
+            {selectedCategory === 'all' ? 'All Events' : categories.find(c => c.id === selectedCategory)?.name}
+            {selectedCategory !== 'all' && (
                 <span className="block text-lg text-accent font-normal mt-2">
                   Showing {filteredEvents.length} {filteredEvents.length === 1 ? 'event' : 'events'}
                 </span>
@@ -268,13 +296,13 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <motion.button
                     onClick={() => handleBookEvent(event?.id)}
-                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 gradient-primary px-4 py-2 rounded-lg text-white font-medium opacity-0 group-hover:opacity-100 transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
->
-                    Book Now
-                  </motion.button>
-                </div>
+className="absolute bottom-4 left-1/2 transform -translate-x-1/2 gradient-primary px-4 py-2 rounded-lg text-white font-medium opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Book Now
+                </motion.button>
+              </div>
                 
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-white mb-1 truncate">
@@ -357,10 +385,10 @@ const Home = () => {
           <div className="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2024 ShowTime. All rights reserved.</p>
           </div>
-        </div>
-      </footer>
-    </div>
-  )
+</div>
+    </footer>
+  </div>
+)
 }
 
 export default Home
